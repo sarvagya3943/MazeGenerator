@@ -28,10 +28,11 @@ public class Main {
 }
 class Panel extends JPanel implements ActionListener {
 	private int width = 400 , height = 400 ;
-	public int rows , cols , w = 20 ;
+	public int rows , cols , w = 10 ;
 	private Cell Current , Next ; 
 	private Timer timer ; 
 	private Stack<Cell> stack ;
+	float red , green , blue ; 
 	private ArrayList<Cell> grid = new ArrayList<Cell>() ; 
 	public Panel() 
 	{
@@ -42,6 +43,10 @@ class Panel extends JPanel implements ActionListener {
 				grid.add(new Cell(i, j)) ; 
 			}
 		}
+		Random random = new Random() ; 
+		red = random.nextFloat() ; 
+		blue = random.nextFloat() ; 
+		green = random.nextFloat() ; 
 		stack = new Stack<Cell>() ; 
 		timer = new Timer(1,this); 
 		timer.start(); 
@@ -99,12 +104,12 @@ class Panel extends JPanel implements ActionListener {
 				g.drawLine(x , y + w, x, y) ; 
 			}
 			if(cell.visited) {
-				g.setColor(new Color(255,0,255,100)) ;
+				g.setColor(new Color((int)(red * 255) , (int)(green * 255) , (int)(blue * 255) , 100)) ;
 				g.fillRect(x, y, w, w) ;
 				g.setColor(Color.white) ; 
 			}
 			if(cell.equals(Current)) {
-				g.setColor(new Color(0,255,0,100)) ; 
+				g.setColor(new Color(0,255,0)) ; 
 				g.fillRect(x, y, w, w) ; 
 				g.setColor(Color.white) ; 
 			}
