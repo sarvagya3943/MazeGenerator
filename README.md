@@ -1,3 +1,3 @@
 # MazeGenerator
-Lame Maze Generator 
-TODO : add cool features 
+Lame Maze Generator <br>
+**TODO** : add cool features 
