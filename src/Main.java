@@ -12,14 +12,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Main {
-
+	// JFrame width and height 
 	private static int width = 400 , height = 400 ;  
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		JFrame frame = new JFrame("Maze Generator") ;
 		Panel panel = new Panel(); 
 		frame.setSize(width , height) ; 
+		// dont allow user to resize the window 
 		frame.setResizable(false) ; 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE) ; 
 		frame.setVisible(true) ; 
@@ -28,12 +28,13 @@ public class Main {
 }
 class Panel extends JPanel implements ActionListener {
 	private int width = 400 , height = 400 ;
-	public int rows , cols , w = 10 ;
+	public int rows , cols , w = 10 ; // number of rows,cols in a grid and width of a grid cell 
 	private Cell Current , Next ; 
-	private Timer timer ; 
+	private Timer timer ; // needed for the animation 
 	private Stack<Cell> stack ;
 	float red , green , blue ; 
-	private ArrayList<Cell> grid = new ArrayList<Cell>() ; 
+	private ArrayList<Cell> grid = new ArrayList<Cell>() ; // grid represented as an Arraylist  
+	// JPanel constructor 
 	public Panel() 
 	{
 		cols = (int)(width/w) ; 
@@ -54,10 +55,12 @@ class Panel extends JPanel implements ActionListener {
 		Current.visited = true ; 
 		setBackground(Color.DARK_GRAY) ; 
 	}
+	// returns the index of cell (i,j) in arraylist 
 	public int index(int i,int j) {
 		if(i < 0 || j < 0 || i >= rows || j >= cols) return -1 ; 
 		return i + j * cols ; 
 	}
+	// return a random unvisited neighbor of the current cell 
 	public Cell checkNeighbors(Cell a) {
 		int index = -1 ; 
 		Cell[] arr = new Cell[4] ; 
@@ -85,12 +88,14 @@ class Panel extends JPanel implements ActionListener {
 		}
 		else return new Cell(-1, -1) ; 
 	}
+	@Override 
 	public void paint(Graphics g)
 	{
 		super.paint(g) ;
 		g.setColor(Color.white) ;
 		for(Cell cell : grid) {
-			int x = cell.getr() * w , y = cell.getc() * w ; 
+			int x = cell.getr() * w , y = cell.getc() * w ;
+			// draw the walls of the cell 
 			if(cell.isWall(0)) {
 				g.drawLine(x, y, x + w, y ) ; 
 			}
@@ -103,11 +108,13 @@ class Panel extends JPanel implements ActionListener {
 			if(cell.isWall(3)) {
 				g.drawLine(x , y + w, x, y) ; 
 			}
+			// visited and unvisited cells have different colors 
 			if(cell.visited) {
 				g.setColor(new Color((int)(red * 255) , (int)(green * 255) , (int)(blue * 255) , 100)) ;
 				g.fillRect(x, y, w, w) ;
 				g.setColor(Color.white) ; 
 			}
+			// distinguish the current cell from the rest 
 			if(cell.equals(Current)) {
 				g.setColor(new Color(0,255,0)) ; 
 				g.fillRect(x, y, w, w) ; 
@@ -115,6 +122,7 @@ class Panel extends JPanel implements ActionListener {
 			}
 		}		
 	}
+	// remove the wall between the current and next cell 
 	public void removeWalls(Cell a,Cell b)
 	{
 		int dx = a.getr() - b.getr() ;
@@ -137,19 +145,23 @@ class Panel extends JPanel implements ActionListener {
 		}
 		
 	}
+	// Timer calls this method every frame 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		// Standard DFS approach 
 		Cell next = checkNeighbors(Current) ; 
+		// found a valid neighbor 
 		if(next.getr() != -1) {
 			next.visited = true ;
 			stack.add(Current) ; 
 			removeWalls(Current,next) ; 
 			Current = next ; 
 		}
+		// couldn't find anything , backtrack! 
 		else if(stack.empty()==false) {
 			Current = stack.pop() ; 
 		}
+		// repaint the panel every frame 
 		repaint() ; 
 	}
 }
