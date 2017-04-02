@@ -49,7 +49,7 @@ class Panel extends JPanel implements ActionListener {
 		blue = random.nextFloat() ; 
 		green = random.nextFloat() ; 
 		stack = new Stack<Cell>() ; 
-		timer = new Timer(0,this); 
+		timer = new Timer(1,this); 
 		timer.start(); 
 		Current = grid.get(0) ; 
 		Current.visited = true ; 
@@ -160,6 +160,16 @@ class Panel extends JPanel implements ActionListener {
 		// couldn't find anything , backtrack! 
 		else if(stack.empty()==false) {
 			Current = stack.pop() ; 
+		}
+		boolean mazeGenerated = true ; 
+		for(Cell cell : grid) {
+			if(!cell.visited) {
+				mazeGenerated = false ; 
+				break ; 
+			}
+		}
+		if(mazeGenerated) {
+			Current = null ; 
 		}
 		// repaint the panel every frame 
 		repaint() ; 
