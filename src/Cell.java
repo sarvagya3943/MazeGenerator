@@ -6,7 +6,12 @@ import javax.sql.RowSet;
 class Cell {
 	// Coordinates of the top-left corner of the grid cell 
 	private int r , c ;
-	// Store which all cells are present in the grid  
+	/* Store which all cells are present in the grid
+	* walls[0] = top wall 
+	* walls[1] = right wall
+	* walls[2] = bottom wall
+	* walls[3] = left wall
+	*/
 	private boolean[] walls = new boolean[4] ; 
 	public boolean visited ; 
 	Cell(int r,int c )
