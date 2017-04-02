@@ -48,7 +48,7 @@ class Panel extends JPanel implements ActionListener {
 		blue = random.nextFloat() ; 
 		green = random.nextFloat() ; 
 		stack = new Stack<Cell>() ; 
-		timer = new Timer(1,this); 
+		timer = new Timer(0,this); 
 		timer.start(); 
 		Current = grid.get(0) ; 
 		Current.visited = true ; 
@@ -98,7 +98,7 @@ class Panel extends JPanel implements ActionListener {
 				g.drawLine(x + w, y , x + w , y + w) ; 
 			}
 			if(cell.isWall(2)) {
-				g.drawLine(x + w, y + w, x , y + w) ; 
+				g.drawLine(x + w,	 y + w, x , y + w) ; 
 			}
 			if(cell.isWall(3)) {
 				g.drawLine(x , y + w, x, y) ; 
