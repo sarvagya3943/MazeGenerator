@@ -32,7 +32,7 @@ class Panel extends JPanel implements ActionListener {
 	private Cell Current , Next ; 
 	private Timer timer ; // needed for the animation 
 	private Stack<Cell> stack ;
-	float red , green , blue ; 
+	int red , green , blue ; 
 	private ArrayList<Cell> grid = new ArrayList<Cell>() ; // grid represented as an Arraylist  
 	// JPanel constructor 
 	public Panel() 
@@ -44,10 +44,11 @@ class Panel extends JPanel implements ActionListener {
 				grid.add(new Cell(i, j)) ; 
 			}
 		}
-		Random random = new Random() ; 
-		red = random.nextFloat() ; 
-		blue = random.nextFloat() ; 
-		green = random.nextFloat() ; 
+		//Random random = new Random() ; 
+		//red = random.nextFloat() ; 
+		//blue = random.nextFloat() ; 
+		//green = random.nextFloat() ; 
+		red = 102 ; blue = 255 ; green = 178 ;
 		stack = new Stack<Cell>() ; 
 		timer = new Timer(1,this); 
 		timer.start(); 
@@ -110,7 +111,8 @@ class Panel extends JPanel implements ActionListener {
 			}
 			// visited and unvisited cells have different colors 
 			if(cell.visited) {
-				g.setColor(new Color((int)(red * 255) , (int)(green * 255) , (int)(blue * 255) , 100)) ;
+				//g.setColor(new Color((int)(red * 255) , (int)(green * 255) , (int)(blue * 255) , 100)) ;
+				g.setColor(new Color(red,green,blue,100)) ; 
 				g.fillRect(x, y, w, w) ;
 				g.setColor(new Color(255,255,255,100)) ; 
 				//g.setColor(Color.white) ; 
