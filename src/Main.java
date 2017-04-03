@@ -92,7 +92,7 @@ class Panel extends JPanel implements ActionListener {
 	public void paint(Graphics g)
 	{
 		super.paint(g) ;
-		g.setColor(Color.white) ;
+		g.setColor(new Color(255,255,255,100)) ;
 		for(Cell cell : grid) {
 			int x = cell.getr() * w , y = cell.getc() * w ;
 			// draw the walls of the cell 
@@ -112,13 +112,21 @@ class Panel extends JPanel implements ActionListener {
 			if(cell.visited) {
 				g.setColor(new Color((int)(red * 255) , (int)(green * 255) , (int)(blue * 255) , 100)) ;
 				g.fillRect(x, y, w, w) ;
-				g.setColor(Color.white) ; 
+				g.setColor(new Color(255,255,255,100)) ; 
+				//g.setColor(Color.white) ; 
 			}
 			// distinguish the current cell from the rest 
 			if(cell.equals(Current)) {
 				g.setColor(new Color(0,255,0)) ; 
 				g.fillRect(x, y, w, w) ; 
-				g.setColor(Color.white) ; 
+				g.setColor(new Color(255,255,255,100)) ; 
+				//g.setColor(Color.white) ; 
+			}
+			else if(cell.isOnStack) {
+				g.setColor(new Color(0,255,0,100)) ; 
+				g.fillRect(x, y, w, w) ; 
+				g.setColor(new Color(255,255,255,100)) ; 
+				//g.setColor(Color.white) ; 
 			}
 		}		
 	}
@@ -154,14 +162,16 @@ class Panel extends JPanel implements ActionListener {
 		if(next.getr() != -1) {
 			next.visited = true ;
 			stack.add(Current) ; 
+			Current.isOnStack = true ;
 			removeWalls(Current,next) ; 
 			Current = next ; 
 		}
 		// couldn't find anything , backtrack! 
 		else if(stack.empty()==false) {
 			Current = stack.pop() ; 
+			Current.isOnStack = false ; 
 		}
-		boolean mazeGenerated = true ; 
+		boolean mazeGenerated = stack.empty() ; 
 		for(Cell cell : grid) {
 			if(!cell.visited) {
 				mazeGenerated = false ; 

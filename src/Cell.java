@@ -13,7 +13,7 @@ class Cell {
 	* walls[3] = left wall
 	*/
 	private boolean[] walls = new boolean[4] ; 
-	public boolean visited ; 
+	public boolean visited , isOnStack ; 
 	Cell(int r,int c )
 	{
 		this.r = r ; 
@@ -23,6 +23,7 @@ class Cell {
 			walls[i] = true ; 
 		}
 		visited = false ; 
+		isOnStack = false ; 
 	}
 	
 	public int getr() {return r ;}
